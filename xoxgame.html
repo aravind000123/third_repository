@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            body, html{
+                background-repeat: no-repeat;
+                background-image: linear-gradient(rgb(0, 255, 247),rgb(30, 99, 227),rgb(25, 197, 209));
+                height: 100%;
+            }
+            #main{
+                position:relative;
+                width:100%;
+                height: 100%;
+            }
+            table{
+                width:100%;
+                height: 100%;
+                border-collapse:collapse;
+            }
+            th{
+                width:30%;
+            }
+            #b1,#b2,#b3,#b4,#b5,#b6,#b7,#b8,#b9{
+                width:100%;
+                height:100%;
+                position:relative;
+            }
+            #game{
+                position:absolute;
+                width:80%;
+                height:70%;
+                top:15%;
+                left:10%;
+            }
+            #result{
+                width:80%;
+                height:60%;
+                border:2px solid red;
+                position:absolute;
+                left:10%;
+                top:20%;
+                display:none;
+                background-color: red;
+            }
+            .buttons{
+                width:100%;
+                height: 13%;
+                left:15%;
+                position: relative;
+                font-size: 80%;
+            }
+            .button1,.button2{
+                height:100%;
+                width:35%;
+                border:2px dotted yellow;
+                background-color: rgb(11, 210, 11);
+                border-radius:20px;
+            }
+            .restart{
+                width:5%;
+                height:6%;
+                position:absolute;
+                right:3px;
+                top:3px;
+                background-image:linear-gradient(blue,rgb(4, 249, 249),blue);
+                border:2px solid black;
+                border-radius: 30%;
+                font-size: 150%;
+                color:black;
+                font-weight:bold;
+            }
+            .restart:hover{
+                background-image:linear-gradient(rgb(0, 255, 247),rgba(21, 0, 255, 0.747),rgb(0, 242, 255));
+            }
+            #result{
+                display: none;
+                justify-content:center;
+                align-items: center;
+            }
+            button{
+                font-size: 300%;
+                background-image:linear-gradient(rgb(29, 255, 4),rgb(0, 255, 255),rgb(72, 255, 0))
+            }
+            button:hover{
+                background-image:linear-gradient(rgb(0, 251, 255),rgb(22, 222, 22),rgb(0, 251, 255));
+            }
+        </style>
+    </head>
+    <body>
+        <div id="main">
+            <button class="restart" onclick="restart()">&#11119</button>
+            <div id="game">
+                <table class="table1" id="table1">
+                    <tr style="height:80px">
+                        <th><button id="b1" value="0" onclick="fun(1)"></button></th>
+                        <th><button id="b2" value="0" onclick="fun(2)"></button></th>
+                        <th><button id="b3" value="0" onclick="fun(3)"></button></th>
+                    </tr>
+                    <tr style="height:80px">
+                        <th><button id="b4" value="0" onclick="fun(4)"></button></th>
+                        <th><button id="b5" value="0" onclick="fun(5)"></button></th>
+                        <th><button id="b6" value="0" onclick="fun(6)"></button></th>
+                    </tr>
+                    <tr style="height:80px">
+                        <th><button id="b7" value="0" onclick="fun(7)"></button></th>
+                        <th><button id="b8" value="0" onclick="fun(8)"></button></th>
+                        <th><button id="b9" value="0" onclick="fun(9)"></button></th>
+                    </tr>
+                </table>
+            </div>
+            <div id="result">
+                <div class="buttons">
+                    <button class="button1" onclick="restart()">RESTART</button>
+                    <button class="button2">CANCEL</button>
+                </div>
+            </div>
+        </div>
+            <script>
+                var check=0;
+                var val=1;
+                let arr=[[0,0,0],[0,0,0],[0,0,0]];
+                function fun(x){
+                    var value1=document.getElementById("b"+x);
+                    if(value1.value=="0")
+                    {
+                        if(val==1)
+                        {
+                            value1.value="1";
+                            value1.innerHTML="X";
+                            value1.style.color="red";
+                            check=check+1;
+                            switch(x){
+                            case 1:arr[0][0]=1;break;
+                            case 2:arr[0][1]=1;break;
+                            case 3:arr[0][2]=1;break;
+                            case 4:arr[1][0]=1;break;
+                            case 5:arr[1][1]=1;break;
+                            case 6:arr[1][2]=1;break;
+                            case 7:arr[2][0]=1;break;
+                            case 8:arr[2][1]=1;break;
+                            case 9:arr[2][2]=1;break;
+                            default:break;
+                            }
+                            logic(1);
+                            val=2;
+                        }
+                        else{
+                            value1.value="1";
+                            check=check+1;
+                            value1.innerHTML="O";
+                            value1.style.color="blue";
+                            switch(x){
+                            case 1:arr[0][0]=2;break;
+                            case 2:arr[0][1]=2;break;
+                            case 3:arr[0][2]=2;break;
+                            case 4:arr[1][0]=2;break;
+                            case 5:arr[1][1]=2;break;
+                            case 6:arr[1][2]=2;break;
+                            case 7:arr[2][0]=2;break;
+                            case 8:arr[2][1]=2;break;
+                            case 9:arr[2][2]=2;break;
+                            default:break;
+                            }
+                            logic(2);
+                            val=1;
+                        }
+                    }
+                }
+                function logic(v){
+                    var symbol;
+                    if(v==1)
+                    {
+                        symbol="X";
+                        color="red";
+                        bcolor="blue";
+                    }
+                    else{
+                        symbol="O";
+                        color="blue";
+                        bcolor="red";
+                    }
+                    var show=document.getElementById("result");
+                    var hidetable=document.getElementById("table1");
+                    for(a=0;a<3;a++)
+                    {
+                        if(arr[a][0]==v && arr[a][1]==v && arr[a][2]==v)
+                        {
+                            show.style.display="flex";
+                            show.textContent=symbol+" WON THE MATCH";
+                            show.style.backgroundColor=color;
+                            show.style.fontSize="40px";
+                            show.style.color=bcolor;
+                            hidetable.style.display="none";
+                        }
+                        else if(arr[0][a]==v && arr[1][a]==v && arr[2][a]==v)
+                        {
+                            show.style.display="flex";
+                            show.textContent=symbol+" WON THE MATCH";
+                            show.style.backgroundColor=color;
+                            show.style.fontSize="40px";
+                            show.style.color=bcolor;
+                            hidetable.style.display="none";
+                        }
+                        else if(arr[0][0]==v && arr[1][1]==v&&arr[2][2]==v)
+                        {
+                            show.style.display="flex";
+                            show.textContent=symbol+" WON THE MATCH";
+                            show.style.backgroundColor=color;
+                            show.style.fontSize="40px";
+                            show.style.color=bcolor;
+                            hidetable.style.display="none";
+                        }
+                        else if(arr[0][2]==v && arr[1][1]==v&&arr[2][0]==v)
+                        {
+                            show.style.display="flex";
+                            show.textContent=symbol+" WON THE MATCH";
+                            show.style.backgroundColor=color;
+                            show.style.fontSize="40px";
+                            show.style.color=bcolor;
+                            hidetable.style.display="none";
+                        }
+                        else if(check==9)
+                        {
+                            show.style.display="flex";
+                        }
+                        else{}
+                    }
+                }
+                function restart(){
+                        val=1;
+                        check=0;
+                        var hidetable=document.getElementById("table1");
+                        hidetable.style.display="table";
+                        var che=document.getElementById("result");
+                        che.style.display="none";
+                        for(i=1;i<10;i++)
+                        {
+                            var id1=document.getElementById("b"+i);
+                            id1.innerHTML="";
+                            id1.value="0";
+                        }
+                        for(i=0;i<3;i++)
+                        {
+                            for(j=0;j<3;j++)
+                            {
+                                arr[i][j]=0;
+                            }
+                        }
+                    }
+            </script>
+    </body>
+</html>
